@@ -11,6 +11,28 @@ function noSwears(word) {
   return false;
 }
 
+function partialBold(element, word) {
+  let elementArr = element.split("");
+  let wordArr = word.split("");
+  let outputArr = [];
+
+  elementArr.forEach(function(letter) {
+    wordArr.forEach(function(wordLetter, wordIndex) {
+      if (wordLetter === elementArr[wordIndex]) {
+        outputArr.push(elementArr.shift().toUpperCase());
+        wordArr.shift();
+      } else {
+        outputArr.push(elementArr.shift());
+      }
+    });
+    wordArr = word.split("");
+  });
+  return outputArr.join('');
+}
+
+
+// outputArr.push("<b>" + elementArr.shift() + "</b>")
+
 // Business Logic
 
 function wordCounter(text) {
@@ -26,6 +48,7 @@ function wordCounter(text) {
   });
   return wordCount;
 }
+
 
 function numberOfOccurrencesInText(word, text) {
   if (noInputtedWord(word, text)) {
@@ -52,6 +75,8 @@ function boldPassage(word, text) {
       htmlString = htmlString.concat("[censored]");
     } else if (word === element) {
       htmlString = htmlString.concat("<b>" + element + "</b>");
+    } else if (element.includes(word)) {
+      htmlString = htmlString.concat(partialBold(element, word));
     } else {
       htmlString = htmlString.concat(element);
     }
