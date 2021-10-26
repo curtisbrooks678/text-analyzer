@@ -4,6 +4,13 @@ function noInputtedWord(word, text) {
   return ((text.trim().length === 0) || (word.trim().length === 0));
 }
 
+function noSwears(word) {
+  if (word.toLowerCase() === "zoinks" || word.toLowerCase() === "muppeteer" || word.toLowerCase() === "biffaroni" || word.toLowerCase() === "loopdaloop") {
+    return true;
+  }
+  return false;
+}
+
 // Business Logic
 
 function wordCounter(text) {
@@ -41,7 +48,9 @@ function boldPassage(word, text) {
   let htmlString = "<p>";
   let textArray = text.split(" ");
   textArray.forEach(function(element, index) {
-    if (word === element) {
+    if (noSwears(element)) {
+      htmlString = htmlString.concat("[censored]");
+    } else if (word === element) {
       htmlString = htmlString.concat("<b>" + element + "</b>");
     } else {
       htmlString = htmlString.concat(element);
